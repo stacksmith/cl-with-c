@@ -14,6 +14,15 @@ All bindings are package-local.  If the foreign definition is in a different pac
 
 BSD 3-clause license
 
+## Installation:
+
+Clone the repo to a directory known to quicklisp, and do
+(ql:quickload cl-with-c).  Or do asdf magic.
+
+## Requirements
+
+CFFI with modernized 'with-foreign-slots' PR145:[Improved 'with-foreign-slots](https://github.com/cffi/cffi/pull/145).  This should be merged shortly; until then, a copy of improved `with-foreign-slots` is included.
+
 ## Usage
 
 `WITH-C (descriptor) body)` or
@@ -35,6 +44,21 @@ instance: a bound instance, or a symbol to bind
 prefix: prefix local bindings
 
 bind: for slotted types, a detailed binding description or :all (default)
+
+      A binding description is a list of forms acceptable to 
+	  'with-foreign-slots, except without any package prefixes.  WITH-C
+	  knows what package the foreign definition is in at takes care of it:
+	  
+	  - a local symbol representing a slot        x
+	  - (name slotname)                           (myx x)
+	  - (:pointer slotname)                       (:pointer x)
+	  - (name :pointer slotname)                  (myx :pointer x)
+	  
+	  binding descriptions are automatically converted to account for
+	  foreign-type's package; local symbols are prefixed with 'prefix'
+	  parameter and checked to make sure that they are unique within 
+	  the WITH-C scope (generating an error if they are not).
+
 
 Examples:
 

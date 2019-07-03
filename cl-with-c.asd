@@ -8,4 +8,5 @@
   :serial t
   :depends-on (#:cffi)
   :components ((:file "package")
-               (:file "with-c")))
+	       (:file "with-foreign-slots")
+               (:file "with-c")) )
