@@ -81,7 +81,7 @@ Examples:
 
 (defparameter point               ;create a variable that contains
               (cffi::parse-type   ;the actual #<foreign-type-xxx>
-			    (:struct point)))
+                (:struct point)))
 				
 (with-c (:new point pt           ;note that point's symbol-value is used
            ((myx x)              ;use custom bindings
