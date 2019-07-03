@@ -16,9 +16,13 @@ BSD 3-clause license
 
 ## Usage
 
-WITH-C   (using (one-or-more-descriptor) ...)    where each descriptor is:
+`WITH-C (descriptor) body)` or
 
-   `(new foreign-type instance &optional prefix bind)`
+`WITH-C ((descriptor1)...) body)`
+
+where each descriptor is:
+
+`(new foreign-type instance &optional prefix bind)`
 ```
 new:  :NEW to allocate a new instance and bind to 'instance'
       :TEMP to allocate a temp instance and bind to 'instance'
