@@ -163,7 +163,7 @@
 ;; multiple objects with same names from different packages, a unique prefix
 ;; may be assigned for each object.
 ;;
-;; USING   (using (one-or-more-descriptor) ...)    where each descriptor is:
+;; WITH-C   (using (one-or-more-descriptor) ...)    where each descriptor is:
 ;;
 ;;   (new foreign-type instance &optional prefix bind)
 ;;
@@ -181,25 +181,25 @@
 ;;
 ;; Examples:
 ;;
-;; (using (:new :int i) i)    ;like (foreign-alloc :int)
+;; (with-c (:new :int i) i)    ;like (foreign-alloc :int)
 ;; 
-;; (using ((:temp :int i)     ;create two foreign ints that have local scope
+;; (with-c ((:temp :int i)     ;create two foreign ints that have local scope
 ;;         (:temp :int j))    ;with 'with-foreign-object'.  *i is used to
 ;;   (setf *i 3               ;access the value, like (mem-ref i :int),
 ;;         *j 5)              ;to get the pointer just use i or j...
 ;;    (foo i j))              ;poof. i and j are gone - do not return ptrs..
 ;;
-;; (using ((:old :int gdk::i "gdk-") ;existing :int i aliased to 'gdk-i
+;; (with-c ((:old :int gdk::i "gdk-") ;existing :int i aliased to 'gdk-i
 ;;         (:old :int g::i   "g-")   ;and another i is now 'g-i
 ;;   (format t "~A ~A" *gdk-i *g-i)  ;get both values
 ;;   (format t "~A ~A" gdk-i *g-i))  ;get both pointers
 ;;
-;; (using (:old (:struct point) gtk::some-point) ;use an exising binding
+;; (with-c (:old (:struct point) gtk::some-point) ;use an exising binding
 ;;  (setf x 1                 ;slot accessors are always values
 ;;        y 2)
 ;;  (foo x y))
 ;;
-;; (using (:old (:struct point) point1)        ;no prefix, slots 'x and 'y
+;; (with-c (:old (:struct point) point1)        ;no prefix, slots 'x and 'y
 ;;        (:temp (:struct point) point2 "T-")) ;prefix accessors of this one
 ;;   (setf t-x (+ 2 x)
 ;;         t-y (+ 2 y))

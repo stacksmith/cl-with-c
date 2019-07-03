@@ -1,10 +1,11 @@
 (in-package :with-c)
 
-(defcstruct point
-  (x :int )
-  (y :int ))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defcstruct point
+    (x :int )
+    (y :int ))
 
-(defparameter point (cffi::parse-type '(:struct point)))
+  (defparameter point (cffi::parse-type '(:struct point))))
 
 (defun test1 ()
   (with-c (:temp point p1)
