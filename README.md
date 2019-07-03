@@ -42,8 +42,8 @@ Examples:
          *j 5)              ;to get the pointer just use i or j...
    (foo i j))               ;poof. i and j are gone - do not return ptrs..
 
-(with-c ((:old :int gdk::i "gdk-") ;existing :int i aliased to 'gdk-i
-         (:old :int g::i   "g-")   ;and another i is now 'g-i
+(with-c ((:old :int gdk::i "gdk-") ;existing :int gdk:i aliased to gdk-i
+         (:old :int g::i   "g-")   ;and g::i is now 'g-i
    (format t "~A ~A" *gdk-i *g-i)  ;get both values
    (format t "~A ~A" gdk-i *g-i))  ;get both pointers
 
