@@ -1,13 +1,12 @@
-# -with-c
-
+# WITH-C
 
 A universal macro for dealing with foreign objects.  Creates an environment with one or more foreign objects - which may be any mix of existing, new, or temporarily-allocated objects.
 
 For slotted objects such as structs or unions, creates package-local bindings for accessors to slots.  To support multiple slotted objects of the same type, a unique prefix may be specified for each object's slot bindings.
 
-For objects without slots, such as :int, creates a package-local value accessor prefixed with "*", so a foreign instance of an :int named q may be referred to as *q for its value and q for its pointer.  To facilitate multiple objects with same names from different packages, a unique prefix may be assigned for each object.
+For objects without slots, such as :int, creates a package-local value accessor prefixed with "*", so a foreign instance of an :int named `q` may be referred to as `*q` for its value and `q` for its pointer.  To facilitate multiple objects with same names from different packages, a unique prefix may be assigned for each object.
 
-All bindings are package-local.  If the foreign definition is in a different package, local symbols are bound with symbols in that package automatically for slotnames and simple type accessors.
+All bindings are package-local; all slotnames are 'pretend package-local' - that is you never have to prefix slotnames with a package - the macro takes care of it (it already knows what package slots are from the foreign type).  Types and instances are the only things that need to be package-prefixed if not visible.
 
 ## License
 
@@ -45,8 +44,8 @@ prefix: prefix local bindings
 bind: for slotted types, a detailed binding description or :all (default)
 
       A binding description is a list of forms acceptable to 
-	  'with-foreign-slots, except without any package prefixes.  WITH-C
-	  knows what package the foreign definition is in at takes care of it:
+	  'with-foreign-slots, with no package prefixes.  Bindings should
+	  be in the current package, and WITH-C knows the package of slots.
 	  
 	  - a local symbol representing a slot        x
 	  - (name slotname)                           (myx x)
@@ -61,7 +60,7 @@ bind: for slotted types, a detailed binding description or :all (default)
 
 Examples:
 
-(with-c (:new :int i) i)    ;like (foreign-alloc :int)
+(with-c (:new :int i) i)    ;allocate a new :int, like (foreign-alloc :int)
  
 (with-c ((:temp :int i)     ;create two foreign ints that have local scope
          (:temp :int j))    ;with 'with-foreign-object'.  *i is used to
@@ -74,14 +73,19 @@ Examples:
    (format t "~A ~A" *gdk-i *g-i)  ;get both values
    (format t "~A ~A" gdk-i *g-i))  ;get both pointers
 
-(with-c (:old (:struct point) gtk::some-point) ;use an exising binding
+(with-c (:old (:struct point) 
+         gtk::some-point)    ;use an exising binding in another package
    (setf x 1                 ;slot accessors are automatically created
          y 2)
    (foo x y))
 
-(with-c (:new (:struct point) pt ;create a new point
+(defparameter point               ;create a variable that contains
+              (cffi::parse-type   ;the actual #<foreign-type-xxx>
+			    (:struct point)))
+				
+(with-c (:new point pt           ;note that point's symbol-value is used
            ((myx x)              ;use custom bindings
-		    (mypy :pointer y)))  ;pointer syntax
+            (mypy :pointer y)))  ;pointer syntax
    (setf myx 1)
    (foo myx mypy)
    pt)                     ;don't forget to foreign-free it later!
