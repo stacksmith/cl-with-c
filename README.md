@@ -47,9 +47,18 @@ Examples:
    (format t "~A ~A" gdk-i *g-i))  ;get both pointers
 
 (with-c (:old (:struct point) gtk::some-point) ;use an exising binding
-   (setf x 1                 ;slot accessors are always values
+   (setf x 1                 ;slot accessors are automatically created
          y 2)
    (foo x y))
+
+(with-c (:new (:struct point) pt ;create a new point
+           ((myx x)              ;use custom bindings
+		    (mypy :pointer y)))  ;pointer syntax
+   (setf myx 1)
+   (foo myx mypy)
+   pt)                     ;don't forget to foreign-free it later!
+
+
 
 (with-c (:old (:struct point) point1)        ;no prefix, slots 'x and 'y
         (:temp (:struct point) point2 "T-")) ;prefix accessors of this one
