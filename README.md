@@ -8,6 +8,7 @@ For slotted objects such as structs or unions, creates package-local bindings fo
 
 For objects without slots, such as :int, creates a package-local value accessor prefixed with "*", so a foreign instance of an :int named q may be referred to as *q for its value and q for its pointer.  To facilitate multiple objects with same names from different packages, a unique prefix may be assigned for each object.
 
+All bindings are package-local.  If the foreign definition is in a different package, local symbols are bound with symbols in that package automatically for slotnames and simple type accessors.
 
 ## License
 
