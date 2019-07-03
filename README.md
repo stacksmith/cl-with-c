@@ -92,8 +92,8 @@ Examples:
 
 
 
-(with-c (:old (:struct point) point1)        ;no prefix, slots 'x and 'y
-        (:temp (:struct point) point2 "T-")) ;prefix accessors of this one
+(with-c (:old point point1)        ;no prefix, slots 'x and 'y
+        (:temp point point2 "T-")) ;prefix accessors of this one
    (setf t-x (+ 2 x)
          t-y (+ 2 y))
    (foo point2))   ;use temp point as a pointer prior to deallocation
