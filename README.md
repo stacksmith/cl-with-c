@@ -18,7 +18,7 @@ BSD 3-clause license
 
 `WITH-C (descriptor) body)` or
 
-`WITH-C ((descriptor1)...) body)`
+`WITH-C ((descriptor-1)..(descriptor-n)) body)`
 
 where each descriptor is:
 
