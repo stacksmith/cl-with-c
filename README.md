@@ -36,10 +36,15 @@ new:  :NEW to allocate a new instance and bind to 'instance'
       :OLD :EXISTING or anything else to use an existing bound instance
 
 foreign-type: A designator for a valid CFFI foreign type
+      - :int            a built-in foreign type
+	  - (:struct xxx)   a CFFI type descriptor
+	  - point           a symbol whose symbol-value is
+	                      a parsed <CFFI-TYPE>
 
 instance: a bound instance, or a symbol to bind
 
-prefix: prefix local bindings
+prefix: a string to prefix local bindings (default is "")
+        You probably want it all-caps.
 
 bind: for slotted types, a detailed binding description or :all (default)
 
