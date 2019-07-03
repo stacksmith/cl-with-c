@@ -1,6 +1,5 @@
 # -with-c
 
-A universal macro for dealing with foreign objects.
 
 A universal macro for dealing with foreign objects.  Creates an environment with one or more foreign objects - which may be any mix of existing, new, or temporarily-allocated objects.
 
