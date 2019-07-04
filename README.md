@@ -1,5 +1,7 @@
 # WITH-C
 
+# SUPERCEDED BY [CL-WITH](https://github.com/stacksmith/cl-with)
+
 A universal macro for dealing with foreign objects.  Creates an environment with one or more foreign objects - which may be any mix of existing, new, or temporarily-allocated objects.
 
 For slotted objects such as structs or unions, creates package-local bindings for accessors to slots.  To support multiple slotted objects of the same type, a unique prefix may be specified for each object's slot bindings.
