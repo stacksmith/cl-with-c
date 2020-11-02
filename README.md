@@ -2,11 +2,13 @@
 
 # SUPERCEDED BY [CL-WITH](https://github.com/stacksmith/cl-with)
 
-A universal macro for dealing with foreign objects.  Creates an environment with one or more foreign objects - which may be any mix of existing, new, or temporarily-allocated objects.
+A universal macro for dealing with foreign objects and slotted objects and their component parts within a lexical environment, optionally rebining them to in-package names (of your choosing).  
+
+For foreign objects, creates an environment with one or more foreign objects - which may be any mix of existing, new, or temporarily-allocated objects, and any desired subcomponents.
 
 For slotted objects such as structs or unions, creates package-local bindings for accessors to slots.  To support multiple slotted objects of the same type, a unique prefix may be specified for each object's slot bindings.
 
-For objects without slots, such as :int, creates a package-local value accessor prefixed with "*", so a foreign instance of an :int named `q` may be referred to as `*q` for its value and `q` for its pointer.  To facilitate multiple objects with same names from different packages, a unique prefix may be assigned for each object.
+For foreign objects without slots, such as :int, creates a package-local value accessor prefixed with "*", so a foreign instance of an :int named `q` may be referred to as `*q` for its value and `q` for its pointer.  To facilitate multiple objects with same names from different packages, a unique prefix may be assigned for each object.
 
 All bindings are package-local; all slotnames are 'pretend package-local' - that is you never have to prefix slotnames with a package - the macro takes care of it (it already knows what package slots are from the foreign type).  Types and instances are the only things that need to be package-prefixed if not visible.
 
